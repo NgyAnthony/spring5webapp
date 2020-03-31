@@ -9,14 +9,18 @@ import java.util.Set;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long Id;
+    private Long Id;
 
     private String title;
     private String isbn;
+
     @ManyToMany
     @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private Set<Author> authors = new HashSet<>();
+
+    @ManyToOne
+    private Publisher publisher;
 
     public Book() {
     }
@@ -26,16 +30,24 @@ public class Book {
         this.isbn = isbn;
     }
 
-    public long getId() {
+    public Long getId() {
         return Id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         Id = id;
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 
     public void setTitle(String title) {
@@ -64,7 +76,6 @@ public class Book {
                 "Id=" + Id +
                 ", title='" + title + '\'' +
                 ", isbn='" + isbn + '\'' +
-                ", authors=" + authors +
                 '}';
     }
 
@@ -75,11 +86,11 @@ public class Book {
 
         Book book = (Book) o;
 
-        return Id == book.Id;
+        return Id != null ? Id.equals(book.Id) : book.Id == null;
     }
 
     @Override
     public int hashCode() {
-        return (int) (Id ^ (Id >>> 32));
+        return Id != null ? Id.hashCode() : 0;
     }
 }

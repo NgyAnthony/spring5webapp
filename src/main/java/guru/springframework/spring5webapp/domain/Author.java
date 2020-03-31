@@ -17,6 +17,7 @@ public class Author {
     private Set<Book> books = new HashSet<>();
 
     public Author() {
+
     }
 
     public Author(String firstName, String lastName) {
@@ -62,7 +63,6 @@ public class Author {
                 "Id=" + Id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", books=" + books +
                 '}';
     }
 
